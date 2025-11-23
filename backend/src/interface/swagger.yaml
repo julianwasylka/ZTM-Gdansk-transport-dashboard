@@ -1,0 +1,86 @@
+openapi: 3.0.0
+info:
+  title: ZTM App API
+  version: 1.0.0
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
+paths:
+  /auth/register:
+    post:
+      summary: Rejestracja
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login: { type: string }
+                password: { type: string }
+      responses:
+        201:
+          description: Created
+  /auth/login:
+    post:
+      summary: Logowanie
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login: { type: string }
+                password: { type: string }
+      responses:
+        200:
+          description: Zwraca token
+  /stops:
+    get:
+      summary: Pobierz wszystkie przystanki (ZTM)
+      tags: [Stops]
+      responses:
+        200:
+          description: Lista przystanków
+    post:
+      summary: Dodaj przystanek do ulubionych
+      tags: [Stops]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stopId: { type: integer }
+      responses:
+        200:
+          description: Dodano
+  /dashboard:
+    get:
+      summary: Dashboard użytkownika
+      tags: [Stops]
+      responses:
+        200:
+          description: Dane live
+  /stops/{id}:
+    delete:
+      summary: Usuń przystanek
+      tags: [Stops]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Usunięto
